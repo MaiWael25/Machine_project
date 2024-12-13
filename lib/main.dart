@@ -124,9 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(
           textAlign: TextAlign.center,
           widget.title,
-          style: const TextStyle(
-            color: Colors.white,
-          ),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
       body: Center(
