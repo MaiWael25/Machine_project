@@ -1,8 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
-import 'package:http/http.dart' as http;
 import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
+import 'package:http/http.dart' as http;
 import 'package:image/image.dart' as img;
+import 'package:ml_project/onboarding_view.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,13 +16,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Animal Predictor',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Animal Predictor'),
+      debugShowCheckedModeBanner: false,
+      home: OnboardingView(),
     );
   }
 }
@@ -116,46 +116,73 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        backgroundColor: const Color(0xff9661A0),
+        elevation: 5,
+        centerTitle: true,
+        title: Text(
+          textAlign: TextAlign.center,
+          widget.title,
+          style: const TextStyle(
+            color: Colors.white,
+          ),
+        ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-              controller: urlController,
-              decoration: const InputDecoration(
-                hintText: 'Enter image URL',
-                border: OutlineInputBorder(),
+        child: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Image(
+                image: AssetImage("assets/image.gif"),
+                height: 200,
+                width: 200,
               ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  imageUrl = urlController.text;
-                });
-                performAction(urlController.text);
-              },
-              child: const Text('Predict'),
-            ),
-            const SizedBox(height: 20),
-            if (imageUrl != null)
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Image.network(imageUrl!,
-                      height: 200, width: 200, fit: BoxFit.cover),
-                  const SizedBox(height: 10),
-                  Text(
-                    result,
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+                  const Text(
+                    "Discover the World of Cats and Dogs! 🐱🐶",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                  ),
+                  const Gap(5),
+                  TextField(
+                    controller: urlController,
+                    decoration: const InputDecoration(
+                      hintText: 'Enter image URL',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                 ],
               ),
-          ],
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    imageUrl = urlController.text;
+                  });
+                  performAction(urlController.text);
+                },
+                child: const Text('Predict'),
+              ),
+              const SizedBox(height: 20),
+              if (imageUrl != null)
+                Column(
+                  children: [
+                    Image.network(imageUrl!,
+                        height: 200, width: 200, fit: BoxFit.cover),
+                    const SizedBox(height: 10),
+                    Text(
+                      result,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
+            ],
+          ),
         ),
       ),
     );
