@@ -130,56 +130,59 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(15),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Image(
-                image: AssetImage("assets/image.gif"),
-                height: 200,
-                width: 200,
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Discover the World of Cats and Dogs! 🐱🐶",
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-                  ),
-                  const Gap(5),
-                  TextField(
-                    controller: urlController,
-                    decoration: const InputDecoration(
-                      hintText: 'Enter image URL',
-                      border: OutlineInputBorder(),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  setState(() {
-                    imageUrl = urlController.text;
-                  });
-                  performAction(urlController.text);
-                },
-                child: const Text('Predict'),
-              ),
-              const SizedBox(height: 20),
-              if (imageUrl != null)
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Image(
+                  image: AssetImage("assets/image.gif"),
+                  height: 200,
+                  width: 200,
+                ),
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.network(imageUrl!,
-                        height: 200, width: 200, fit: BoxFit.cover),
-                    const SizedBox(height: 10),
-                    Text(
-                      result,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
+                    const Text(
+                      "Discover the World of Cats and Dogs! 🐱🐶",
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    ),
+                    const Gap(5),
+                    TextField(
+                      controller: urlController,
+                      decoration: const InputDecoration(
+                        hintText: 'Enter image URL',
+                        border: OutlineInputBorder(),
+                      ),
                     ),
                   ],
                 ),
-            ],
+                const SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      imageUrl = urlController.text;
+                    });
+                    performAction(urlController.text);
+                  },
+                  child: const Text('Predict'),
+                ),
+                const SizedBox(height: 20),
+                if (imageUrl != null)
+                  Column(
+                    children: [
+                      Image.network(imageUrl!,
+                          height: 200, width: 200, fit: BoxFit.cover),
+                      const SizedBox(height: 10),
+                      Text(
+                        result,
+                        style: const TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+              ],
+            ),
           ),
         ),
       ),
